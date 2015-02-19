@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <link href="css/ionic.css" rel="stylesheet">
+    <script type="text/javascript" src="https://www.google.com/jsapi"></script>
+    <script type="text/javascript">
+      google.load("feeds", "1")
+    </script>
+  </head>
+  <body>
+    <div style="margin:50px 0 0 0;">
+      <body>
+        <div class="bar bar-header bar-light">
+          <h1 class="title">Upcoming Events</h1>
+        </div>
+        <div id="feed"></div>
+        <div class="bar bar-footer bar-balanced">
+          <div class="title">College of Business</div>
+        </div>
+    </div>
+      
+      <script type="text/javascript">
+      var feedcontainer=document.getElementById("feed")
+      var feedurl="http://cob.sfsu.edu/events/xml/"
+      var feedlimit=10
+      var rssoutput="<ul class='list'>"
+
+      function rssfeedsetup(){
+      var feedpointer=new google.feeds.Feed(feedurl)
+      feedpointer.setNumEntries(feedlimit) 
+      feedpointer.load(displayfeed) 
+      }
+
+      function displayfeed(result){
+      if (!result.error){
+      var thefeeds=result.feed.entries
+      for (var i=0; i<thefeeds.length; i++)
+      // rssoutput+="<li class='item'><a href='#' onclick='window.open('" + thefeeds[i].link + "', ‘_blank’, ‘location=no’);'>" + thefeeds[i].title + "</a></li>"
+      rssoutput+="<li class='item'><a href='" + thefeeds[i].link + "'>" + thefeeds[i].title + "</a></li>"
+      rssoutput+="</ul>"
+      feedcontainer.innerHTML=rssoutput
+      }
+      else
+      alert("Error fetching feeds!")
+      }
+
+      google.setOnLoadCallback(rssfeedsetup);
+    </script>
+      
+  </body>
+</html>
+  
